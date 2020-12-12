@@ -23,7 +23,7 @@ cmdescrita  : 'escreva' AP
                         SC
             ;
 
-cmdattrib   : ID ATTR expr SC
+cmdattrib   : ID ATTR expr SC {System.out.println("Reconheci um comando de atribuicao");}
             ;
 
 expr        : termo ( OP termo )*
