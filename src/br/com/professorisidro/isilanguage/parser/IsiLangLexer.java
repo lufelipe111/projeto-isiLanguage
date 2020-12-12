@@ -91,8 +91,10 @@ public class IsiLangLexer extends Lexer {
 
 
 	    private int _tipo;
-	    private String _varname;
+	    private String _varName;
 	    private String _varValue;
+	    private IsiSymbolTable symbolTable = new IsiSymbolTable();
+	    private IsiSymbol symbol;
 
 
 	public IsiLangLexer(CharStream input) {

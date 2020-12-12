@@ -10,9 +10,10 @@ grammar IsiLang;
 
 @members {
     private int _tipo;
-    private String _varname;
+    private String _varName;
     private String _varValue;
     private IsiSymbolTable symbolTable = new IsiSymbolTable();
+    private IsiSymbol symbol;
 }
 
 prog    : 'programa'  decl bloco  'fimprog;'
@@ -21,11 +22,29 @@ prog    : 'programa'  decl bloco  'fimprog;'
 decl : (declaravar)+
      ;
 
-declaravar  : tipo ID (VIR ID)* SC
+declaravar  : tipo {
+                _varName = _input.LT(-1).getText();
+                _varValue = null;
+                symbol = new IsiVariable(_varName, _tipo, _varValue);
+                System.out.println("Simbolo adicionado: " + symbol);
+                symbolTable.add(symbol);
+              }
+              ID {
+                   _varName = _input.LT(-1).getText();
+                   _varValue = null;
+                   symbol = new IsiVariable(_varName, _tipo, _varValue);
+                   System.out.println("Simbolo adicionado: " + symbol);
+                   symbolTable.add(symbol);
+                 }
+              (
+                VIR
+                ID
+              )*
+              SC
             ;
 
-tipo    : 'numero' {System.out.println("TIPO NUMERO")}
-        | 'texto'  {System.out.println("TIPO TEXTO")}
+tipo    : 'numero' {_tipo = IsiVariable.NUMBER;}
+        | 'texto'  {_tipo = IsiVariable.TEXT;}
         ;
 
 bloco   : (cmd)+
