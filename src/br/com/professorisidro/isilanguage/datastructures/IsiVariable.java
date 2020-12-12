@@ -34,7 +34,7 @@ public class IsiVariable extends IsiSymbol{
         return "IsiVariable [" +
                 "name=" + name +
                 ", type=" + type +
-                ", value='" + value +
+                ", value=" + value +
                 ']';
     }
 }
