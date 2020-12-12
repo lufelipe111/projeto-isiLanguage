@@ -96,6 +96,12 @@ public class IsiLangLexer extends Lexer {
 	    private IsiSymbolTable symbolTable = new IsiSymbolTable();
 	    private IsiSymbol symbol;
 
+	    public void verificaID(String id) {
+	        if(!symbolTable.exists(_varName)) {
+	          throw new IsiSemanticException("Symbol " + _varName + " not declared");
+	        }
+	    }
+
 
 	public IsiLangLexer(CharStream input) {
 		super(input);

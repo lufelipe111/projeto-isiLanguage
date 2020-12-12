@@ -14,6 +14,12 @@ grammar IsiLang;
     private String _varValue;
     private IsiSymbolTable symbolTable = new IsiSymbolTable();
     private IsiSymbol symbol;
+
+    public void verificaID(String id) {
+        if(!symbolTable.exists(_varName)) {
+          throw new IsiSemanticException("Symbol " + _varName + " not declared");
+        }
+    }
 }
 
 prog    : 'programa'  decl bloco  'fimprog;'
@@ -22,23 +28,32 @@ prog    : 'programa'  decl bloco  'fimprog;'
 decl : (declaravar)+
      ;
 
-declaravar  : tipo {
+declaravar  : tipo
+              ID {
                 _varName = _input.LT(-1).getText();
                 _varValue = null;
                 symbol = new IsiVariable(_varName, _tipo, _varValue);
-                System.out.println("Simbolo adicionado: " + symbol);
+                if(!symbolTable.exists(_varName)) {
+                  symbolTable.add(symbol);
+                  System.out.println("Simbolo adicionado: " + symbol);
+                } else {
+                  throw new IsiSemanticException("Variable" + _varName + "already exists");
+                }
                 symbolTable.add(symbol);
               }
-              ID {
-                   _varName = _input.LT(-1).getText();
-                   _varValue = null;
-                   symbol = new IsiVariable(_varName, _tipo, _varValue);
-                   System.out.println("Simbolo adicionado: " + symbol);
-                   symbolTable.add(symbol);
-                 }
               (
                 VIR
-                ID
+                ID {
+                  _varName = _input.LT(-1).getText();
+                  _varValue = null;
+                  symbol = new IsiVariable(_varName, _tipo, _varValue);
+                  if(!symbolTable.exists(_varName)) {
+                    symbolTable.add(symbol);
+                    System.out.println("Simbolo adicionado: " + symbol);
+                  } else {
+                    throw new IsiSemanticException("Variable " + _varName + " already exists");
+                  }
+                }
               )*
               SC
             ;
@@ -50,30 +65,34 @@ tipo    : 'numero' {_tipo = IsiVariable.NUMBER;}
 bloco   : (cmd)+
         ;
 
-cmd     : cmdleitura {System.out.println("Reconheci um comando de LEITURA");}
-        | cmdescrita {System.out.println("Reconheci um comando de ESCRITA");}
-        | cmdattrib  {System.out.println("Reconheci um comando de ATRIBUICAO");}
+cmd     : cmdleitura
+        | cmdescrita
+        | cmdattrib
         ;
 
 cmdleitura  : 'leia' AP
-                     ID {System.out.println("ID=" + _input.LT(-1).getText());}
+                     ID { verificaID(_input.LT(-1).getText()); }
                      FP
                      SC
             ;
 
 cmdescrita  : 'escreva' AP
-                        ID
+                        ID { verificaID(_input.LT(-1).getText()); }
                         FP
                         SC
             ;
 
-cmdattrib   : ID ATTR expr SC {System.out.println("Reconheci um comando de atribuicao");}
+cmdattrib   : ID { verificaID(_input.LT(-1).getText()); }
+              ATTR
+              expr
+              SC
             ;
 
 expr        : termo ( OP termo )*
             ;
 
-termo       : ID | NUMBER
+termo       : ID { verificaID(_input.LT(-1).getText()); }
+            | NUMBER
             ;
 
 VIR     : ','

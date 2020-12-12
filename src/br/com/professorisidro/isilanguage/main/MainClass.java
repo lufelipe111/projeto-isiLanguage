@@ -1,5 +1,6 @@
 package br.com.professorisidro.isilanguage.main;
 
+import br.com.professorisidro.isilanguage.exceptions.IsiSemanticException;
 import br.com.professorisidro.isilanguage.parser.IsiLangLexer;
 import br.com.professorisidro.isilanguage.parser.IsiLangParser;
 import org.antlr.v4.runtime.CharStreams;
@@ -28,8 +29,10 @@ public class MainClass {
             parser.prog();
 
             System.out.println("Compilation success!");
+        } catch (IsiSemanticException e) {
+            System.err.println("Semantic Error: " + e.getMessage());
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Generic Error: " + e.getMessage());
         }
     }
 }
