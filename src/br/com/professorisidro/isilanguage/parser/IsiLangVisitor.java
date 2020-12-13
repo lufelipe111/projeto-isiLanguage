@@ -5,6 +5,15 @@ package br.com.professorisidro.isilanguage.parser;
     import br.com.professorisidro.isilanguage.datastructures.IsiSymbolTable;
     import br.com.professorisidro.isilanguage.datastructures.IsiVariable;
     import br.com.professorisidro.isilanguage.exceptions.IsiSemanticException;
+    import br.com.professorisidro.isilanguage.ast.IsiProgram;
+    import br.com.professorisidro.isilanguage.ast.AbstractCommand;
+    import br.com.professorisidro.isilanguage.ast.CommandLeitura;
+    import br.com.professorisidro.isilanguage.ast.CommandEscrita;
+    import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
+    import br.com.professorisidro.isilanguage.ast.CommandDecisao;
+    import br.com.professorisidro.isilanguage.ast.CommandEnquanto;
+
+    import java.util.Stack;
     import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
@@ -71,6 +80,18 @@ public interface IsiLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCmdattrib(IsiLangParser.CmdattribContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link IsiLangParser#cmdselecao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCmdselecao(IsiLangParser.CmdselecaoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link IsiLangParser#cmdenquanto}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCmdenquanto(IsiLangParser.CmdenquantoContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link IsiLangParser#expr}.
 	 * @param ctx the parse tree

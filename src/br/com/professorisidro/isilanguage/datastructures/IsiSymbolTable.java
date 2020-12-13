@@ -1,5 +1,6 @@
 package br.com.professorisidro.isilanguage.datastructures;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class IsiSymbolTable {
@@ -14,10 +15,18 @@ public class IsiSymbolTable {
     }
 
     public boolean exists(String symbolName) {
-        return map.get(symbolName) != null;
+        return (map.get(symbolName) != null);
     }
 
     public IsiSymbol get(String symbolName) {
         return map.get(symbolName);
+    }
+
+    public ArrayList<IsiSymbol> getAll() {
+        ArrayList<IsiSymbol> lista = new ArrayList<IsiSymbol>();
+        for(IsiSymbol symbol : map.values()) {
+            lista.add(symbol);
+        }
+        return lista;
     }
 }

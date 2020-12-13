@@ -37,4 +37,15 @@ public class IsiVariable extends IsiSymbol{
                 ", value=" + value +
                 ']';
     }
+
+    @Override
+    public String generateJavaCode() {
+        String str;
+        if(type == NUMBER) {
+            str = "double ";
+        } else {
+            str ="String ";
+        }
+        return str + " " + super.name + ";";
+    }
 }

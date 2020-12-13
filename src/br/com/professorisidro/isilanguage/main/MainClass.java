@@ -29,6 +29,10 @@ public class MainClass {
             parser.prog();
 
             System.out.println("Compilation success!");
+
+            parser.exibeComandos();
+
+            parser.generateCode();
         } catch (IsiSemanticException e) {
             System.err.println("Semantic Error: " + e.getMessage());
         } catch (Exception e) {

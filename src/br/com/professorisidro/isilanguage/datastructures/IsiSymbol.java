@@ -11,6 +11,8 @@ public abstract class IsiSymbol {
         return name;
     }
 
+    public abstract String generateJavaCode();
+
     public IsiSymbol(String name) {
         this.name = name;
     }
