@@ -7,10 +7,9 @@ programa
     escreva("Digite B").
     leia(b).
 
-    g := 0.
-    a := "tela".
+    g := "texto".
 
-    se(a<b) entao
+    se(a<g) entao
     {
         c := a + b.
     }senao

@@ -182,9 +182,23 @@ cmdattrib   : ID {
 
 cmdselecao  : 'se'
               AP
-              ID { _exprDecision = _input.LT(-1).getText(); }
+              ID {
+                _exprDecision = _input.LT(-1).getText();
+                IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
+                _type = var.getType();
+                if (_type != IsiVariable.NUMBER) {
+                    throw new IsiTypeException("variable " + _input.LT(-1).getText() + " isn't a NUMERO");
+                }
+              }
               OPREL { _exprDecision += _input.LT(-1).getText(); }
-              (ID | NUMBER) { _exprDecision += _input.LT(-1).getText(); }
+              ( ID {
+                  var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
+                  _type = var.getType();
+                  if (_type != IsiVariable.NUMBER) {
+                      throw new IsiTypeException("variable " + _input.LT(-1).getText() + " isn't a NUMERO");
+                  }
+              }
+              | NUMBER) { _exprDecision += _input.LT(-1).getText(); }
               FP
               'entao'
               ACH
@@ -206,9 +220,25 @@ cmdselecao  : 'se'
 
 cmdenquanto : 'enquanto'
               AP
-              ID { _exprWhile = _input.LT(-1).getText(); }
+              ID {
+                _exprWhile = _input.LT(-1).getText();
+                {
+                    IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
+                    _type = var.getType();
+                    if (_type != IsiVariable.NUMBER) {
+                        throw new IsiTypeException("variable " + _input.LT(-1).getText() + " isn't a NUMERO");
+                    }
+                }
+              }
               OPREL { _exprWhile += _input.LT(-1).getText(); }
-              (ID | NUMBER) { _exprWhile += _input.LT(-1).getText(); }
+              ( ID {
+                  IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
+                  _type = var.getType();
+                  if (_type != IsiVariable.NUMBER) {
+                      throw new IsiTypeException("variable " + _input.LT(-1).getText() + " isn't a NUMERO");
+                  }
+              }
+              | NUMBER) { _exprWhile += _input.LT(-1).getText(); }
               FP
               ACH
               bloco
