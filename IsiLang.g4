@@ -5,6 +5,7 @@ grammar IsiLang;
     import br.com.professorisidro.isilanguage.datastructures.IsiSymbolTable;
     import br.com.professorisidro.isilanguage.datastructures.IsiVariable;
     import br.com.professorisidro.isilanguage.exceptions.IsiSemanticException;
+    import br.com.professorisidro.isilanguage.exceptions.IsiTypeException;
     import br.com.professorisidro.isilanguage.ast.IsiProgram;
     import br.com.professorisidro.isilanguage.ast.AbstractCommand;
     import br.com.professorisidro.isilanguage.ast.CommandLeitura;
@@ -152,16 +153,23 @@ cmdescrita  : 'escreva' AP
 cmdattrib   : ID {
                     verificaID(_input.LT(-1).getText());
                     _exprID = _input.LT(-1).getText();
+                    IsiVariable var = (IsiVariable) symbolTable.get(_exprID);
+                    _type = var.getType();
               }
               ATTR { _exprContent = ""; }
               (
-                    expr
+                    expr {
+                        if (_type != IsiVariable.NUMBER) {
+                            throw new IsiTypeException("variable " + _exprID + " isn't a NUMERO");
+                        }
+                    }
                   | STRING {
                         _exprContent += _input.LT(-1).getText();
+                        if (_type != IsiVariable.TEXT) {
+                            throw new IsiTypeException("variable " + _exprID + " isn't a TEXTO");
+                        }
                   }
               ) {
-                IsiVariable var = (IsiVariable) symbolTable.get(_exprID);
-                _type = var.getType();
                 IsiVariable newVar = new IsiVariable(_exprID, _type, _exprContent);
                 symbolTable.put(_exprID, newVar);
               }

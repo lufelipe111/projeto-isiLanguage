@@ -1,10 +1,14 @@
 programa
     numero a,b,c,d,e,f.
+    texto g.
     escreva("Programa Teste").
     escreva("Digite A").
     leia(a).
     escreva("Digite B").
     leia(b).
+
+    g := 0.
+    a := "tela".
 
     se(a<b) entao
     {

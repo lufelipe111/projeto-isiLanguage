@@ -13,6 +13,7 @@ System.out.println("Digite A");
 a = _key.nextDouble();
 System.out.println("Digite B");
 b = _key.nextDouble();
+a = "tela";
 if (a<b) {
 c = a+b;
 }
