@@ -1,5 +1,5 @@
 programa
-    numero a,b,c,d.
+    numero a,b,c,d,e,f.
     escreva("Programa Teste").
     escreva("Digite A").
     leia(a).

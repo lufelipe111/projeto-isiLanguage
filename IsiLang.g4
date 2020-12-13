@@ -36,10 +36,20 @@ grammar IsiLang;
     private String _exprContent;
     private String _exprDecision;
     private String _exprWhile;
+    private int _type;
 
     public void verificaID(String id) {
         if(!symbolTable.exists(id)) {
-          throw new IsiSemanticException("Symbol " + id + " not declared");
+            throw new IsiSemanticException("Symbol " + id + " not declared");
+        }
+    }
+
+    public void verificaUsoVars() {
+        for(IsiSymbol symbol : symbolTable.values()) {
+            IsiVariable curr = (IsiVariable) symbol;
+            if(curr.getValue() == null) {
+                System.out.println("variable " + curr.getName() + " is declared but never used");
+            }
         }
     }
 
@@ -58,6 +68,7 @@ prog    : 'programa'  decl bloco  'fimprog.'
            {
               program.setVarTable(symbolTable);
               program.setComandos(stack.pop());
+              verificaUsoVars();
            }
         ;
 
@@ -119,6 +130,9 @@ cmdleitura  : 'leia' AP
                      DT
                      {
                         IsiVariable var =  (IsiVariable) symbolTable.get(_readID);
+                        _type = var.getType();
+                        IsiVariable newVar = new IsiVariable(_readID, _type, _readID);
+                        symbolTable.put(_readID, newVar);
                         CommandLeitura cmd = new CommandLeitura(_readID, var);
                         stack.peek().add(cmd);
                      }
@@ -145,7 +159,12 @@ cmdattrib   : ID {
                   | STRING {
                         _exprContent += _input.LT(-1).getText();
                   }
-              )
+              ) {
+                IsiVariable var = (IsiVariable) symbolTable.get(_exprID);
+                _type = var.getType();
+                IsiVariable newVar = new IsiVariable(_exprID, _type, _exprContent);
+                symbolTable.put(_exprID, newVar);
+              }
               DT
               {
                 CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);

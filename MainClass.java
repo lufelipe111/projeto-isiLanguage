@@ -6,6 +6,8 @@ double  a;
 double  b;
 double  c;
 double  d;
+double  e;
+double  f;
 System.out.println("Programa Teste");
 System.out.println("Digite A");
 a = _key.nextDouble();

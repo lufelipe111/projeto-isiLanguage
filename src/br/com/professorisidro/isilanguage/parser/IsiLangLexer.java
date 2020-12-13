@@ -121,10 +121,20 @@ public class IsiLangLexer extends Lexer {
 	    private String _exprContent;
 	    private String _exprDecision;
 	    private String _exprWhile;
+	    private int _type;
 
 	    public void verificaID(String id) {
 	        if(!symbolTable.exists(id)) {
-	          throw new IsiSemanticException("Symbol " + id + " not declared");
+	            throw new IsiSemanticException("Symbol " + id + " not declared");
+	        }
+	    }
+
+	    public void verificaUsoVars() {
+	        for(IsiSymbol symbol : symbolTable.values()) {
+	            IsiVariable curr = (IsiVariable) symbol;
+	            if(curr.getValue() == null) {
+	                System.out.println("variable " + curr.getName() + " is declared but never used");
+	            }
 	        }
 	    }
 
