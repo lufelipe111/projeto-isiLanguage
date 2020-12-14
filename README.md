@@ -1,1 +1,20 @@
 # projeto-isiLanguage
+
+Projeto final da disciplina de Compiladores - 2020QS 
+
+## Objetivo
+
+O objetivo deste trabalho é desenvolver os aspectos práticos da IsiLanguage.
+Uma linguagem de programação imperativa muito próxima do Português estruturado, que foi inicialmente desenvolvida ao longo das aulas no decorrer do quadrimestre.
+Utilizou-se no desenvolvimento o ANTLR versão 4.
+
+### Participantes do grupo:
+
+- Luiz Felipe Azzolini
+- Giselle Santana
+- Beatriz Yordaky
+- Sonny Ganiko
+
+
+
+
