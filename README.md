@@ -10,7 +10,7 @@ Utilizou-se no desenvolvimento o ANTLR versão 4.
 
 ### Participantes do grupo:
 
-- Luiz Felipe
+- Luiz Felipe Azzolini
 - Giselle Santana
 - Beatriz Yordaky
 - Sonny Ganiko
