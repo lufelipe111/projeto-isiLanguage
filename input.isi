@@ -17,9 +17,9 @@ programa
         c := a - b.
     }
 
-    enquanto (a<2) {
+    enquanto (a>2) {
         escreva(g).
-        a = a-1.
+        a := a-1.
     }
     escreva ("C e igual a ").
     escreva(a).
