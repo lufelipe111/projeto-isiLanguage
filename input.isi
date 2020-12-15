@@ -7,9 +7,9 @@ programa
     escreva("Digite B").
     leia(b).
 
-    g := "texto".
+    g := "A eh menor que 2".
 
-    se(a<g) entao
+    se(a<2) entao
     {
         c := a + b.
     }senao
@@ -17,6 +17,10 @@ programa
         c := a - b.
     }
 
+    enquanto (a<2) {
+        escreva(g).
+        a = a-1.
+    }
     escreva ("C e igual a ").
     escreva(a).
 

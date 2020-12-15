@@ -19,6 +19,7 @@ public class CommandDecisao extends AbstractCommand{
         StringBuilder str = new StringBuilder();
 
         str.append("if (" + condition + ") {\n");
+        // Bloco de comandos
         for (AbstractCommand cmd : listaTrue) {
             str.append(cmd.generateJavaCode());
             str.append("\n");
@@ -26,6 +27,7 @@ public class CommandDecisao extends AbstractCommand{
         str.append("}\n");
         if(listaFalse.size() > 0) {
             str.append("else {\n");
+            // Outro bloco de comandos
             for (AbstractCommand cmd : listaFalse) {
                 str.append(cmd.generateJavaCode());
                 str.append("\n");

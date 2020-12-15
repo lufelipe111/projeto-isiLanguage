@@ -19,10 +19,14 @@ public class IsiProgram {
         str.append("import java.util.Scanner;\n");
         str.append("public class MainClass {\n");
         str.append("    public static void main (String args[]) {\n");
+        // Variavel para receber entrada do teclado
         str.append("        Scanner _key = new Scanner(System.in);\n");
+        // Escrita de bloco de declaração de variáveis
         for(IsiSymbol symbol : varTable.getAll()) {
+            // Escreve tipo da vairavel + nome da variavel + ";"
             str.append(symbol.generateJavaCode()+"\n");
         }
+        // Escrita de bloco de comandos
         for (AbstractCommand command : comandos) {
             str.append(command.generateJavaCode()+"\n");
         }

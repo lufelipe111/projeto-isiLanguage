@@ -183,15 +183,17 @@ cmdattrib   : ID {
 cmdselecao  : 'se'
               AP
               (ID {
+                _exprDecision = _input.LT(-1).getText();
                 IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
                 _type = var.getType();
                 if (_type != IsiVariable.NUMBER) {
                     throw new IsiTypeException("variable " + _input.LT(-1).getText() + " isn't a NUMERO");
                 }
               }
-              | NUMBER) { _exprDecision += _input.LT(-1).getText(); }
+              | NUMBER { _exprDecision = _input.LT(-1).getText(); })
               OPREL { _exprDecision += _input.LT(-1).getText(); }
               ( ID {
+                  IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
                   var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
                   _type = var.getType();
                   if (_type != IsiVariable.NUMBER) {
@@ -222,7 +224,6 @@ cmdselecao  : 'se'
 cmdenquanto : 'enquanto'
               AP
               (ID {
-                _exprWhile = _input.LT(-1).getText();
                 {
                     IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
                     _type = var.getType();
@@ -231,7 +232,7 @@ cmdenquanto : 'enquanto'
                     }
                 }
               }
-              | NUMBER) { _exprWhile += _input.LT(-1).getText(); }
+              | NUMBER) { _exprWhile = _input.LT(-1).getText(); }
               OPREL { _exprWhile += _input.LT(-1).getText(); }
               ( ID {
                   IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
