@@ -182,14 +182,14 @@ cmdattrib   : ID {
 
 cmdselecao  : 'se'
               AP
-              ID {
-                _exprDecision = _input.LT(-1).getText();
+              (ID {
                 IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
                 _type = var.getType();
                 if (_type != IsiVariable.NUMBER) {
                     throw new IsiTypeException("variable " + _input.LT(-1).getText() + " isn't a NUMERO");
                 }
               }
+              | NUMBER) { _exprDecision += _input.LT(-1).getText(); }
               OPREL { _exprDecision += _input.LT(-1).getText(); }
               ( ID {
                   var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
@@ -207,7 +207,8 @@ cmdselecao  : 'se'
               {
                 listaTrue = stack.pop();
               }
-              ('senao'
+              (
+              'senao'
               ACH
               bloco
               FCH
@@ -220,7 +221,7 @@ cmdselecao  : 'se'
 
 cmdenquanto : 'enquanto'
               AP
-              ID {
+              (ID {
                 _exprWhile = _input.LT(-1).getText();
                 {
                     IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
@@ -230,6 +231,7 @@ cmdenquanto : 'enquanto'
                     }
                 }
               }
+              | NUMBER) { _exprWhile += _input.LT(-1).getText(); }
               OPREL { _exprWhile += _input.LT(-1).getText(); }
               ( ID {
                   IsiVariable var = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
